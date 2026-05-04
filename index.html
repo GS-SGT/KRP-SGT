@@ -372,7 +372,7 @@ var BLN=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','Sep
 var JOPTS=['','Pagi','Sore','Malam','Luar Kota'];
 
 window.addEventListener('DOMContentLoaded',function(){
-  document.getElementById('iTgl').value=new Date().toISOString().split('T')[0];
+  document.getElementById('iTgl').value=new Date(Date.now()+7*3600000).toISOString().split('T')[0];
   document.getElementById('iJab').value='Dispatcher';
   document.getElementById('iCat').value='Demikian kami sampaikan, atas perhatiannya kami ucapkan terimakasih';
   loadData();
@@ -521,7 +521,7 @@ function muat(){loadData();render();toast('📂 Data dimuat!');}
 function resetAll(){
   if(!confirm('Reset semua data harian?'))return;
   D={};EX=[];EU=0;
-  document.getElementById('iTgl').value=new Date().toISOString().split('T')[0];
+  document.getElementById('iTgl').value=new Date(Date.now()+7*3600000).toISOString().split('T')[0];
   document.getElementById('iDisp').value='';
   document.getElementById('iJab').value='Dispatcher';
   document.getElementById('iUnit').value='';
