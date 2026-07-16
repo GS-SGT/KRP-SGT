@@ -367,6 +367,30 @@ var MASTER=[
   {id:'m13',lam:'SGT 83 (KT 8789 RZ)', st:'Shift'},
   {id:'m14',lam:'SGT 84 (KT 8803 RC)', st:'Shift'},
 ];
+
+// ── Data default (berulang setiap hari) ────────────────────────────────────
+// No.1-9 (Pool): Pekerjaan selalu "Pool".
+// No.10-14 (Shift): Pekerjaan, User, Asal, Tujuan, Agenda, dan Jam (Pagi/Malam) tetap.
+// Semua tetap bisa diedit manual per hari kalau ada perubahan — ini cuma isian awal.
+// Silakan sesuaikan nilainya sesuai kebutuhan sebenarnya (revisi menyusul).
+var MASTER_DEFAULTS={
+  m1:{pk:'Pool'}, m2:{pk:'Pool'}, m3:{pk:'Pool'}, m4:{pk:'Pool'},
+  m5:{pk:'Pool'}, m6:{pk:'Pool'}, m7:{pk:'Pool'}, m8:{pk:'Pool'}, m9:{pk:'Pool'},
+  m10:{pk:'PO',              us:'Po & Ram',           as:'Sangkima', tj:'Lokasi', ag:'Aplos PO',              jp:'06:00', jml:'14:00'},
+  m11:{pk:'Checker Utara',   us:'Checker Utara',      as:'Sangkima', tj:'Lokasi', ag:'Aplos Checker Utara',   jp:'08:00', jml:'20:00'},
+  m12:{pk:'Checker Selatan', us:'Checker Selatan',    as:'Sangkima', tj:'Lokasi', ag:'Aplos Checker Selatan', jp:'08:00', jml:'20:00'},
+  m13:{pk:'Rig H25',         us:'Crew Rig H25',       as:'Sangkima', tj:'Lokasi', ag:'Aplos Rig H25',         jp:'06:00', jml:'18:00'},
+  m14:{pk:'Rig L350',        us:'Crew Rig L350',      as:'Sangkima', tj:'Lokasi', ag:'Aplos Rig L350',        jp:'06:00', jml:'18:00'}
+};
+function applyDefaults(){
+  for(var id in MASTER_DEFAULTS){
+    if(!D[id]) D[id]={};
+    var def=MASTER_DEFAULTS[id];
+    for(var k in def){
+      if(D[id][k]===undefined || D[id][k]==='') D[id][k]=def[k];
+    }
+  }
+}
 var D={},EX=[],EU=0,NS='Pool',saveTimer=null;
 var BLN=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
 var JOPTS=['','Pagi','Sore','Malam','Luar Kota'];
@@ -376,6 +400,7 @@ window.addEventListener('DOMContentLoaded',function(){
   document.getElementById('iJab').value='Dispatcher';
   document.getElementById('iCat').value='Demikian kami sampaikan, atas perhatiannya kami ucapkan terimakasih';
   loadData();
+  applyDefaults();
   render();
   document.getElementById('addOvl').addEventListener('click',function(e){if(e.target===this)tutupAdd();});
 });
@@ -527,6 +552,7 @@ function resetAll(){
   document.getElementById('iUnit').value='';
   document.getElementById('iNama').value='';
   document.getElementById('iCat').value='Demikian kami sampaikan, atas perhatiannya kami ucapkan terimakasih';
+  applyDefaults();
   render();toast('♻️ Direset');
 }
 
